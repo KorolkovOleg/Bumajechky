@@ -1,6 +1,9 @@
 package com.bumajechky.domain;
 
+import com.bumajechky.security.Authority;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,6 +14,7 @@ public class User {
     private String username;
     private String password;
     private Set<Package> packages;
+    private Set<Authority> authorities = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +50,14 @@ public class User {
 
     public void setPackages(Set<Package> packages) {
         this.packages = packages;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
