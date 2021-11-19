@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+            integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#createAccount").click(function () {
+                window.location.href = "/register";
+             });
+        });
+    </script>
 </head>
 <body>
     <form action="" method="post">
@@ -25,6 +34,7 @@
             </p>
             <div>
                 <button type="submit" class="btn">Log in</button>
+                <button type="button" id="createAccount" class="btn">Create account</button>
             </div>
         </fieldset>
     </form>
