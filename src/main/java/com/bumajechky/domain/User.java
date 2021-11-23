@@ -13,7 +13,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private Set<Package> packages;
+    private Set<Pack> packages;
     private Set<Authority> authorities = new HashSet<>();
 
     @Id
@@ -44,11 +44,11 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "user_package")
-    public Set<Package> getPackages() {
+    public Set<Pack> getPackages() {
         return packages;
     }
 
-    public void setPackages(Set<Package> packages) {
+    public void setPackages(Set<Pack> packages) {
         this.packages = packages;
     }
 

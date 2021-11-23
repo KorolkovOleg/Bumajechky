@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Package {
+public class Pack {
 
     private Long id;
     private String name;
@@ -38,7 +38,7 @@ public class Package {
         this.users = users;
     }
 
-    @OneToMany(mappedBy = "aPackage")
+    @OneToMany(mappedBy = "pack", cascade = CascadeType.ALL)
     public Set<Card> getCards() {
         return cards;
     }

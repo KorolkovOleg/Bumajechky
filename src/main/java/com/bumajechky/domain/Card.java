@@ -1,7 +1,5 @@
 package com.bumajechky.domain;
 
-import org.hibernate.annotations.GeneratorType;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +9,7 @@ public class Card {
     private String name;
     private String frontSide;
     private String backSide;
-    private Package aPackage;
+    private Pack pack;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,11 +46,11 @@ public class Card {
     }
 
     @ManyToOne
-    public Package getaPackage() {
-        return aPackage;
+    public Pack getPack() {
+        return pack;
     }
 
-    public void setaPackage(Package aPackage) {
-        this.aPackage = aPackage;
+    public void setPack(Pack pack) {
+        this.pack = pack;
     }
 }
