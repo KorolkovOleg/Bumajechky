@@ -1,15 +1,17 @@
 package com.bumajechky.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "package")
 public class Pack {
 
     private Long id;
     private String name;
-    private Set<User> users;
-    private Set<Card> cards;
+    private Set<User> users = new HashSet<>();
+    private Set<Card> cards = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,11 @@ public class Pack {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "packages")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(     name = "user_package",
+                    joinColumns = { @JoinColumn(name = "package_id")},
+                    inverseJoinColumns = { @JoinColumn(name = "user_id")}
+    )
     public Set<User> getUsers() {
         return users;
     }
@@ -38,12 +44,22 @@ public class Pack {
         this.users = users;
     }
 
-    @OneToMany(mappedBy = "pack", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pack", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Set<Card> getCards() {
         return cards;
     }
 
     public void setCards(Set<Card> cards) {
         this.cards = cards;
+    }
+
+    @Override
+    public String toString() {
+        return "Pack{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                ", cards=" + cards +
+                '}';
     }
 }

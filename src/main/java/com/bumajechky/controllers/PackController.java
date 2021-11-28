@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.HashSet;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PackController {
@@ -19,13 +15,31 @@ public class PackController {
     @Autowired
     PackRepository packRepository;
 
-    @GetMapping("/pack")
-    public String pack() {
-        return "package";
+    @GetMapping("/packages")
+    public String dashboardView(@AuthenticationPrincipal User user, ModelMap modelMap) {
+
+        modelMap.put("pack", new Pack());
+        modelMap.put("packages", packRepository.findAllByUsers(user));
+        return "packages";
+    }
+
+    @GetMapping("/pack/{id}")
+    public String pack(@PathVariable("id") int id) {
+        return "pack";
     }
 
     @PostMapping("/createPack")
     public String createPack(@AuthenticationPrincipal User user, @ModelAttribute Pack pack) {
-        return "pack/" + pack.getName();
+        pack.getUsers().add(user);
+        pack = packRepository.saveAndFlush(pack);
+
+
+        return "redirect:pack/" + pack.getId();
     }
+
+    @GetMapping("/pack/{id}/edit")
+    public String getEditPackTemplate() {
+        return "packedit";
+    }
+
 }

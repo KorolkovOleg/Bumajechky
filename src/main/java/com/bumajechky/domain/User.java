@@ -13,7 +13,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private Set<Pack> packages;
+    private Set<Pack> packages = new HashSet<>();
     private Set<Authority> authorities = new HashSet<>();
 
     @Id
@@ -42,8 +42,11 @@ public class User {
         this.password = password;
     }
 
-    @ManyToMany
-    @JoinTable(name = "user_package")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(     name = "user_package",
+                    joinColumns = { @JoinColumn(name = "user_id")},
+                    inverseJoinColumns = { @JoinColumn(name = "package_id")}
+    )
     public Set<Pack> getPackages() {
         return packages;
     }
