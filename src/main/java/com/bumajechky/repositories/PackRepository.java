@@ -10,4 +10,6 @@ public interface PackRepository extends JpaRepository<Pack, Long> {
 
     List<Pack> findAllByUsers(User user);
 
+    void deleteById(Long id);
+
 }

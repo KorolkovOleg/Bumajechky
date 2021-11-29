@@ -42,7 +42,7 @@ public class User {
         this.password = password;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(     name = "user_package",
                     joinColumns = { @JoinColumn(name = "user_id")},
                     inverseJoinColumns = { @JoinColumn(name = "package_id")}

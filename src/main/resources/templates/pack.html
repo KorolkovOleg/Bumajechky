@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,12 +9,16 @@
     <script type="text/javascript">
         $(function () {
             $("#editPackage").click(function () {
-                window.location.href = "/editPackage";
+                window.location.href = "/edit";
              });
         });
     </script>
 </head>
 <body>
-    <button type="button" id="editPackage" class="btn">Edit package</button>
+<form th:method = "PATCH" th:action = "@{/pack/{id}/edit (id = ${pack.id})}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <input type="text" th:field="${pack.name}">
+    <button type="submit" class="btn">Rename package</button>
+</form>
 </body>
 </html>

@@ -7,14 +7,20 @@
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <button type="submit">Logout</button>
 </form>
-<form action="/createPack" method="post">
+<form action="/create" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     Package name <input type="text" th:field="${pack.name}"/>
     <button type="submit">Create package</button>
 </form>
 <div class="container">
     <div th:each="pack : ${packages}">
-        <div th:text="${pack.name}"></div>
+        <div>
+            <a th:href="@{/pack/{id}(id = ${pack.id})}" th:text="${pack.name}"></a>
+            <form th:method="DELETE" th:action="@{/pack/{id} (id = ${pack.id})}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" value="Delete">Delete</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>
