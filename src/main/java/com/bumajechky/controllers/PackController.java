@@ -1,7 +1,9 @@
 package com.bumajechky.controllers;
 
+import com.bumajechky.domain.Card;
 import com.bumajechky.domain.Pack;
 import com.bumajechky.domain.User;
+import com.bumajechky.repositories.CardRepository;
 import com.bumajechky.repositories.PackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +19,9 @@ public class PackController {
     @Autowired
     PackRepository packRepository;
 
+    @Autowired
+    CardRepository cardRepository;
+
     @GetMapping("/packages")
     public String dashboardView(@AuthenticationPrincipal User user, ModelMap modelMap) {
 
@@ -26,8 +31,12 @@ public class PackController {
     }
 
     @GetMapping("/pack/{id}")
-    public String pack(@PathVariable("id") long id, ModelMap modelMap) {
+    public String pack(@PathVariable("id") Long id, ModelMap modelMap) {
         Optional<Pack> pack = packRepository.findById(id);
+
+        modelMap.put("card", new Card());
+        modelMap.put("cards", cardRepository.findAllByPack(pack.get()));
+
         pack.ifPresent(value -> modelMap.put("pack", value));
         return "pack";
     }
@@ -53,7 +62,7 @@ public class PackController {
     }
 
     @DeleteMapping("/pack/{id}")
-    public String deletePackage(@PathVariable("id") long id) {
+    public String deletePackage(@PathVariable("id") Long id) {
         System.out.println(id);
         packRepository.deleteById(id);
         return "redirect:/packages";
