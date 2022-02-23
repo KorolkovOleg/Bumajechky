@@ -53,4 +53,15 @@ public class Card {
     public void setPack(Pack pack) {
         this.pack = pack;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", frontSide='" + frontSide + '\'' +
+                ", backSide='" + backSide + '\'' +
+                ", pack=" + pack +
+                '}';
+    }
 }

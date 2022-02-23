@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
             crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -13,6 +13,28 @@
              });
         });
     </script>
+    <script>
+        $('#cardForm')
+        .on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'post',
+                data: $form.serialize(),
+                success: function(response) {
+                    // if the response contains any errors, replace the form
+                    if ($(response).find('.has-error').length) {
+                      $form.replaceWith(response);
+                    } else {
+                      // in this case we can actually replace the form
+                      // with the response as well, unless we want to
+                      // show the success message a different way
+                    }
+                }
+            });
+        })
+    }(jQuery));
+    </script>
 </head>
 <body>
 <form th:method = "PATCH" th:action = "@{/pack/{id}/edit (id = ${pack.id})}">
@@ -20,13 +42,24 @@
     <input type="text" th:field="${pack.name}">
     <button type="submit" class="btn">Rename package</button>
 </form>
-<form th:method = "POST" th:action = "@{/pack/{id}/createcard (id = ${pack.id})}">
+<div th:fragment="card-form" th:remove="tag">
+<form th:id = "cardForm" th:method = "POST" th:action = "@{/pack/{id}/createcard (id = ${pack.id})}" th:object="${card}">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    Title <input type="text" th:field="${card.name}">
-    Title <input type="text" th:field="${card.frontSide}">
-    Title <input type="text" th:field="${card.backSide}">
+    <div th:classappend="${#fields.hasErrors('name')}?has-error">
+        <label class="control-label">Name</label>
+        <input type="text" th:field="*{name}">
+    </div>
+    <div th:classappend="${#fields.hasErrors('name')}?has-error">
+        <label class="control-label">Front side</label>
+        <input type="text" th:field="*{frontSide}">
+    </div>
+    <div th:classappend="${#fields.hasErrors('name')}?has-error">
+        <label class="control-label">Back side</label>
+        <input type="text" th:field="*{backSide}">
+    </div>
     <button type="submit" class="btn">CreateCard</button>
 </form>
+</div>
 
 <div th:each="card : ${cards}">
     <div>

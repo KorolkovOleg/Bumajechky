@@ -5,7 +5,9 @@ import com.bumajechky.domain.Pack;
 import com.bumajechky.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -17,10 +19,18 @@ public class CardController {
 
     @PostMapping("/createcard")
     public String createCard(   @ModelAttribute("card") Card card,
-                                @ModelAttribute("pack") Pack pack) {
+                                @ModelAttribute("pack") Pack pack,
+                                BindingResult result,
+                                ModelMap model) {
+
+        if (result.hasErrors()) {
+            return "pack :: info-form";
+        }
+
+        System.out.println(card);
         card.setPack(pack);
         cardRepository.save(card);
-        return "redirect:/pack/" + pack.getId() + "/";
+        return "pack :: info-success";
     }
 
     @DeleteMapping("/deletecard/{cardId}")
