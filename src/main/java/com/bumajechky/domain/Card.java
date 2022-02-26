@@ -60,8 +60,7 @@ public class Card {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", frontSide='" + frontSide + '\'' +
-                ", backSide='" + backSide + '\'' +
-                ", pack=" + pack +
+                ", backSide='" + backSide +
                 '}';
     }
 }

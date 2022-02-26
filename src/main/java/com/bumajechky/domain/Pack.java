@@ -57,9 +57,7 @@ public class Pack {
     public String toString() {
         return "Pack{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", users=" + users +
-                ", cards=" + cards +
+                ", name='" + name +
                 '}';
     }
 }

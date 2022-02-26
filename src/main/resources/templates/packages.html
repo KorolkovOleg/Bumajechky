@@ -4,20 +4,21 @@
 </head>
 <body>
 <form action="/logout" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
     <button type="submit">Logout</button>
 </form>
 <form action="/create" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
     Package name <input type="text" th:field="${pack.name}"/>
     <button type="submit">Create package</button>
 </form>
+
 <div class="container">
     <div th:each="pack : ${packages}">
         <div>
             <a th:href="@{/pack/{id}(id = ${pack.id})}" th:text="${pack.name}"></a>
             <form th:method="DELETE" th:action="@{/pack/{id} (id = ${pack.id})}">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
                 <button type="submit" value="Delete">Delete</button>
             </form>
         </div>

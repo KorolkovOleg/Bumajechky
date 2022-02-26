@@ -70,7 +70,6 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", packages=" + packages +
                 ", authorities=" + authorities +
                 '}';
     }
