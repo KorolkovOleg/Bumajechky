@@ -1,14 +1,20 @@
 package com.bumajechky.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
+@JsonAutoDetect
 public class Card {
 
     private Long id;
     private String name;
     private String frontSide;
     private String backSide;
+
+    @JsonIgnore
     private Pack pack;
 
     @Id

@@ -37,7 +37,6 @@ $(document).ready(
                 console.log(result);
             },
             error: function(e) {
-                alert('error');
                 console.log('ERROR: ' + e );
             }
         });
