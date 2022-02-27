@@ -6,11 +6,6 @@ $(document).ready(
     });
 
     function ajaxPost() {
-//        var token = $("meta[name='_csrf']").attr("content");
-//        var header = $("meta[name='_csrf_header']").attr("content");
-//        $(document).ajaxSend(function(e, xhr, options) {
-//        xhr.setRequestHeader(header, token);
-//        });
 
         var formData = {
             name: $('#createdCardName').val(),
@@ -21,7 +16,7 @@ $(document).ready(
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/pack/10/createcard',
+            url: window.location.href + '/createcard',
             data: JSON.stringify(formData),
             dataType: 'json',
             success: function(result) {

@@ -14,10 +14,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/pack/{id}")
+@RequestMapping("/pack/{packId}")
 public class CardController {
 
     @Autowired
@@ -28,14 +29,24 @@ public class CardController {
 
     @PostMapping("/createcard")
     @ResponseBody
-    public ResponseEntity<Object> createCard(@RequestBody Card card) {
+    public ResponseEntity<Object> createCard(@RequestBody Card card,
+                                             @PathVariable("packId") Long packId) {
 
         System.out.println(card);
-        card.setPack(packRepository.findById(10L).get());
+        card.setPack(packRepository.findById(packId).get());
         card = cardRepository.save(card);
         CardServiceResponse<Card> cardResponse = new CardServiceResponse<>("success", card);
         System.out.println("card response: " + cardResponse.toString());
         return new ResponseEntity<Object>(cardResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/cards")
+    @ResponseBody
+    public ResponseEntity<Object> getAllCards(@PathVariable("packId") Long packId) {
+
+        List<Card> cards = cardRepository.findAllByPack(packRepository.findById(packId).get());
+        CardServiceResponse<List<Card>> cardsResponse = new CardServiceResponse<>("success", cards);
+        return new ResponseEntity<Object>(cardsResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/deletecard/{cardId}")
