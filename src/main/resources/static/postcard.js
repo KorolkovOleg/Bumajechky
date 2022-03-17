@@ -24,6 +24,17 @@ $(document).ready(
                     $('#postResultDiv').html(
                         '' + result.data.name + ' Post successfully'
                     );
+
+                    var card = result.data;
+                    var packVar = $(
+                                    '<tr>'+
+                                        '<td hidden="true">' + card.id + '</td>' +
+                                        '<td>' + card.name + '</td>' +
+                                        '<td>' + card.frontSide + '</td>' +
+                                        '<td>' + card.backSide + '</td>' +
+                                    '</tr>'
+                    );
+                    $('#cardsTable').prepend(packVar);
                 } else {
                 $('#postResultDiv').html(
                                         'Post не successfully'
